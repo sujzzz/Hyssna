@@ -172,14 +172,63 @@ CLIENTS = [
     ("dyncorp", "DynCorp International"), ("xerox", "Xerox"), ("oceaneering", "Oceaneering"),
 ]
 
+GM = ("bassam-moussa", "Mr. Bassam Moussa", "General Manager")
+GM_QUOTE = "Hyssna caters to understanding clients need &amp; addressing their need."
+# the General Manager's message, as written on the current hyssnainternational.com
+GM_MESSAGE = [
+    "It is my pleasure to introduce Hyssna International LLC as a leading interior contracting and designing company in UAE. "
+    "Over three decades, Hyssna has been providing a quality service to our customers who have been looking for a company "
+    "that could provide excellent and competitive services.",
+    "At Hyssna, we are committed to produce prominent and innovative interior design solutions especially for your working "
+    "atmosphere. We are specialized in designing, planning and implementing of both domestic and commercial interiors. "
+    "We enjoy good reputation for quality designs and high skills within your own budget and time scale.",
+    "Hyssna is built a reputation for consistently achieving highly individual aesthetic results for a discerning local "
+    "clientele. We place particular emphasis on understanding our clients\u2019 requirements prior to producing design "
+    "solutions, which often surpass expectations. Our enthusiastic and experienced professionals, approach each project as "
+    "a new challenge. We offer different style and innovative approach in our design concept and solutions.",
+    "Hyssna has committed in completing each project to the highest standards, while taking on the challenge of capturing "
+    "its unique individuality. We have extensive experience in materials and manufacturing techniques, both locally and "
+    "internationally, and able to provide our clients with everything they aspire for, within the budget they choose.",
+    "Hyssna offers you total solutions for Turnkey Projects under one roof. If you have an idea or concept you would like "
+    "to discuss why not give us a call and see how we can start to play an active role to fulfill the design of your "
+    "choice and liking.",
+]
+
+# departments and people, in the order of the Our Team page on the current site
 TEAM = [
-    ("abdallah", "Abdallah", "Project Department"),
-    ("musthafa", "Musthafa", "Project Department"),
-    ("bivi", "Bivi", "Designer, Design Department"),
-    ("rommel", "Rommel", "MEP Designer, Design Department"),
-    ("sreenath", "Sreenath", "Hyssna team"),
-    ("clyde", "Clyde", "Hyssna team"),
-    ("bassair", "Bassair", "Hyssna team"),
+    ("admin", "Admin",
+     "Experienced administrative management and a dedicated team, working in a fully computerised environment to support every project from start to completion.",
+     [("nagesh", "Mr. Nagesh", "Admin Manager"), ("smitha-jobis", "Ms. Smitha Jobis", "Project Controller"),
+      ("ahmed-suleiman", "Mr. Ahmed Suleiman", "PRO"), ("pauline", "Ms. Pauline", "Document Controller"),
+      ("vittal", "Mr. Vittal", "Admin"), ("rica", "Ms. Rica", "Admin"),
+      ("hanan", "Ms. Hanan", "Admin Assistant"), ("fatima", "Ms. Fatima", "Admin Assistant")]),
+    ("finance", "Finance",
+     "Experienced finance management, working alongside administration to give every project integrated management support.",
+     [("ambili", "Ms. Ambili", "Senior Accountant"), ("diana", "Ms. Diana", "Accountant"), ("bindu", "Ms. Bindu", "Accountant")]),
+    ("design", "Design",
+     "Architects, interior designers and MEP designers with more than 35 years of collective experience, from 2D layouts to 3D perspectives and animation.",
+     [("akbar", "Mr. Akbar", "Designer"), ("bivin", "Mr. Bivin", "Designer"),
+      ("arbee", "Mr. Arbee", "Designer"), ("rommel", "Mr. Rommel", "MEP Designer")]),
+    ("procurement", "Procurement",
+     "Loose fittings, FF&amp;E, floor, wall and ceiling finishes and lighting, procured globally for each project in coordination with its project manager.",
+     [("sain-basheer", "Mr. Sain Basheer", "Procurement Manager"), ("faye-salcedo", "Ms. Faye Salcedo", "Assistant Procurement")]),
+    ("commercial", "Commercial",
+     "Industry professionals with many years of experience across the interiors and construction sector, building strong and lasting partnerships.",
+     [("sreenath", "Mr. Sreenath", "QA/QC Manager"), ("clyde", "Mr. Clyde", "QA/QC")]),
+    ("planning", "Planning",
+     "Contractual programmes built in Primavera P6 and tracked with earned value reports, to deliver every project on time and in budget.",
+     [("robin-francisco", "Mr. Robin Francisco", "Planning Manager")]),
+    ("projects", "Projects",
+     "Your single point of contact on site, coordinating the programme, costs, approvals and every trade through to handover.",
+     [("salas", "Mr. Salas", "Sr. Project Manager"), ("raja-guru", "Mr. Raja Guru", "Sr. MEP Manager"),
+      ("abdallah", "Mr. Abdallah", "Project Manager"), ("suhil", "Mr. Suhil", "Site Engineer"),
+      ("raj-kumar", "Mr. Raj Kumar", "Site Engineer"), ("nathaniel", "Mr. Nathaniel", "Site Engineer")]),
+    ("hse", "HSE",
+     "An occupational health and safety management system, with safe systems of work, safety checks and toolbox talks on every site.",
+     [("dennis-mutasa", "Mr. Dennis Mutasa", "HSE Manager")]),
+    ("factory", "Fit-out factory",
+     "Our joinery division in Musaffah makes counters, cabinets, panelling, ceilings, wardrobes and wooden furniture for our projects.",
+     [("hasan", "Mr. Hasan", "Joinery Manager")]),
 ]
 
 PROCESS = [
@@ -834,37 +883,42 @@ def about():
 
 
 def team():
-    people = "".join(f'<li class="reveal">{media(s, n + ", " + r, folder="team")}<b>{n}</b><span>{r}</span></li>' for s, n, r in TEAM)
-    depts = [
-        ("pencil", "Design", "Architects, interior designers and engineers with more than 35 years of collective experience, from 2D layouts to 3D animation."),
-        ("calendar", "Planning", "Led by Planning Manager Mr. Robin Francisco, the team builds the contractual programme in Primavera P6 and tracks it with earned value reports."),
-        ("box", "Procurement", "Quality-focused sourcing of loose fittings, FF&amp;E, finishes and lighting from around the world."),
-        ("factory", "Fit-out factory", "Our joinery team manufactures counters, panelling, furniture and bespoke pieces in Musaffah."),
-        ("building", "Projects", "Project managers and site teams who coordinate every trade from first fix to handover."),
-        ("shield", "Health, safety and environment", "HSE Manager Mr. Dennis Mutasa leads safety planning, toolbox talks and site inspections."),
-        ("users", "Sales", "Industry professionals with many years of experience who build lasting partnerships with our clients."),
-        ("chart", "Finance and administration", "The team that keeps every project and every department running smoothly."),
-    ]
-    body = f'''{intro("The people behind the work.", "Industry professionals across design, planning, procurement, projects, joinery and HSE, working as one team.", [("team.html", "Our team")])}
-<section class="sec tight" aria-label="A word from our General Manager">
-  <div class="container quote">
-    {media("gm", "General Manager of Hyssna International", folder="team")}
-    <blockquote class="reveal">
-      <p>"Our strength lies in teamwork: sharing strategies, knowledge and ideas across every department, with an open flow of communication and real team spirit."</p>
-      <footer><b>General Manager</b>Hyssna International L.L.C.</footer>
-    </blockquote>
+    count = sum(len(d[3]) for d in TEAM)
+    pills = [f'<button type="button" data-team-filter="all" aria-pressed="true">All<span>{count}</span></button>']
+    groups = []
+    for n, (key, name, text, people) in enumerate(TEAM, 1):
+        pills.append(f'<button type="button" data-team-filter="{key}" aria-pressed="false">{name}<span>{len(people)}</span></button>')
+        crew = "".join(
+            f'<li><div class="crew-photo">{img(slug, f"{who}, {role}", folder="team")}</div><b>{who}</b><span>{role}</span></li>'
+            for slug, who, role in people)
+        groups.append(f'''<div class="dept reveal" data-dept="{key}">
+      <div class="dept-head"><span class="dept-no">{n:02d}</span><h3>{name}</h3><p>{text}</p></div>
+      <ul class="crew">{crew}</ul>
+    </div>''')
+    message = "".join(f"<p>{para}</p>" for para in GM_MESSAGE)
+    slug, gm_name, gm_role = GM
+    body = f'''{intro("The people behind the work.", f"{count} specialists across nine departments, led by our General Manager, {gm_name}.", [("team.html", "Our team")])}
+<section class="sec cream panel gm" aria-labelledby="gm-title">
+  <div class="container gm-grid">
+    <div class="gm-side reveal">
+      <div class="gm-photo">{img(slug, f"{gm_name}, {gm_role} of Hyssna International", lazy=False, folder="team")}</div>
+      <p class="gm-name"><b>{gm_name}</b>{gm_role}</p>
+    </div>
+    <div class="gm-body">
+      <span class="kicker reveal">A message from our General Manager</span>
+      <h2 id="gm-title" class="gm-quote reveal">{GM_QUOTE}</h2>
+      <div class="gm-text reveal">{message}</div>
+      <p class="gm-sign reveal"><b>{gm_name}</b>{gm_role}, Hyssna International LLC</p>
+    </div>
   </div>
 </section>
-<section class="sec" aria-labelledby="meet-title">
+<section class="sec team" aria-labelledby="meet-title">
   <div class="container">
-    <div class="sec-title reveal"><h2 id="meet-title">Meet the team</h2></div>
-    <ul class="people">{people}</ul>
-  </div>
-</section>
-<section class="sec cream panel" aria-labelledby="dept-title">
-  <div class="container">
-    <div class="sec-title reveal"><h2 id="dept-title">Every discipline, in-house</h2><p>Each department brings its own expertise, and all of them work to one programme and one standard.</p></div>
-    {icon_list(depts)}
+    <div class="sec-title reveal"><h2 id="meet-title">Meet the team</h2><p>Nine departments under one roof, from the first design sketch to the last piece of joinery.</p></div>
+    <div class="team-filter" role="group" aria-label="Show a department">{"".join(pills)}</div>
+    <div class="depts" id="team-list">
+    {"".join(groups)}
+    </div>
   </div>
 </section>
 <section class="sec" aria-labelledby="join-title">
@@ -874,7 +928,8 @@ def team():
   </div>
 </section>'''
     return page("team.html", "Our team | Hyssna International",
-                "Meet the team behind Hyssna International's interior fit-out, design and joinery work.", body, "team.html")
+                f"Meet {gm_name}, General Manager, and the {count} people across design, planning, procurement, projects, HSE and joinery at Hyssna International.",
+                body, "team.html")
 
 
 def careers():

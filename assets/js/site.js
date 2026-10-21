@@ -189,6 +189,24 @@
     }
   }
 
+  // Our team: show one department, or all of them
+  var filters = document.querySelectorAll('[data-team-filter]');
+  if (filters.length) {
+    var depts = document.querySelectorAll('[data-dept]');
+    var list = document.getElementById('team-list');
+    filters.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var key = b.getAttribute('data-team-filter');
+        filters.forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
+        depts.forEach(function (d) {
+          d.hidden = key !== 'all' && d.getAttribute('data-dept') !== key;
+          d.classList.add('in');
+        });
+        if (list.getBoundingClientRect().top < 0) list.scrollIntoView({ block: 'start' });
+      });
+    });
+  }
+
   // Lightbox
   var lb = document.getElementById('lightbox');
   var lbImg = document.getElementById('lb-img');

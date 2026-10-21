@@ -454,15 +454,6 @@ img[src*="adnoc-4"] { object-position: 75% 50%; }
 @media (max-width: 900px) { .faq { grid-template-columns: 1fr; gap: 30px; } .faq > :last-child { grid-column: 1; } }
 
 /* quote */
-.quote { display: grid; grid-template-columns: 4fr 1fr 7fr; align-items: center; }
-.quote > :last-child { grid-column: 3; }
-.quote .media { aspect-ratio: 4 / 4.8; max-width: 420px; }
-.quote .media img { object-position: 50% 25%; filter: grayscale(1); }
-.quote blockquote { margin: 0; }
-.quote blockquote p { font-size: clamp(1.4rem, 2.2vw, 2rem); line-height: 1.35; font-weight: 500; letter-spacing: -0.015em; color: var(--head); }
-.quote footer { margin-top: 28px; font-size: 1rem; }
-.quote footer b { display: block; color: var(--head); }
-@media (max-width: 900px) { .quote { grid-template-columns: 1fr; gap: 40px; } .quote > :last-child { grid-column: 1; } .quote .media { max-width: 300px; } }
 
 /* text + image */
 .text-media { display: grid; grid-template-columns: 5fr 1fr 6fr; align-items: center; }
@@ -505,13 +496,56 @@ img[src*="adnoc-4"] { object-position: 75% 50%; }
 @media (max-width: 700px) { .logos { grid-template-columns: repeat(3, minmax(0, 1fr)); } .logos li { padding: 10px 12px; } }
 
 /* team */
-.people { display: grid; grid-template-columns: repeat(4, 1fr); gap: 50px 30px; list-style: none; margin: 0; padding: 0; }
-.people .media { aspect-ratio: 4 / 4.6; margin-bottom: 18px; background: #e9e6dc; }
-.people .media img { object-position: 50% 20%; filter: grayscale(1); }
-.people b { display: block; font-size: 1.25rem; color: var(--head); }
-.people span { font-size: 0.9375rem; }
-@media (max-width: 1000px) { .people { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 600px) { .people { grid-template-columns: 1fr 1fr; gap: 30px 16px; } }
+/* our team: General Manager's message */
+.gm-grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 1fr) minmax(0, 7fr); align-items: start; }
+.gm-side { position: sticky; top: 40px; }
+/* the red strip beside the portrait echoes the hi mark */
+.gm-photo { width: min(100%, 320px); aspect-ratio: 166 / 200; border-left: 12px solid var(--red); border-radius: var(--r-sm); overflow: hidden; background: #fff; }
+.gm-photo img { width: 100%; height: 100%; object-fit: cover; }
+.gm-name { margin: 22px 0 0; font-size: 0.9375rem; }
+.gm-name b, .gm-sign b { display: block; font-size: 1.25rem; font-weight: 500; color: var(--head); }
+.gm-body { grid-column: 3; }
+.gm-quote { position: relative; margin: 26px 0 50px; padding-top: 70px; font-size: clamp(1.9rem, 3.4vw, 3.25rem); }
+.gm-quote::before { content: "\201C"; position: absolute; top: -10px; left: -4px; font-size: 8rem; line-height: 1; color: var(--red); }
+.gm-text { max-width: 44rem; font-size: 1.0625rem; }
+.gm-sign { margin: 40px 0 0; padding-top: 26px; border-top: 1px solid var(--line); max-width: 44rem; font-size: 0.9375rem; }
+@media (max-width: 900px) {
+  .gm-grid { grid-template-columns: 1fr; gap: 40px; }
+  .gm-side { position: static; display: flex; align-items: flex-end; gap: 20px; }
+  .gm-photo { width: 130px; flex: none; border-left-width: 8px; }
+  .gm-name b { font-size: 1.125rem; }
+  .gm-name { margin: 0; }
+  .gm-body { grid-column: 1; }
+  .gm-quote { padding-top: 54px; margin-bottom: 36px; }
+  .gm-quote::before { font-size: 6rem; }
+}
+
+/* our team: departments */
+.team-filter { position: sticky; top: 0; z-index: 5; display: flex; gap: 10px; padding-block: 16px; margin-bottom: 10px; overflow-x: auto; scrollbar-width: none; background: var(--dark); }
+.team-filter::-webkit-scrollbar { display: none; }
+.team-filter button { flex: none; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border: 1px solid var(--line); border-radius: 50px; background: none; color: var(--head); font: inherit; font-size: 0.9375rem; font-weight: 500; cursor: pointer; transition: background .25s ease, color .25s ease, border-color .25s ease; }
+.team-filter button span { font-size: 0.8125rem; opacity: .6; }
+.team-filter button:hover { border-color: var(--head); }
+.team-filter button[aria-pressed="true"] { background: var(--cream); border-color: var(--cream); color: var(--dark); }
+.depts { scroll-margin-top: 80px; }
+.dept[hidden] { display: none; }
+.dept { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 40px; padding-block: 50px; border-top: 1px solid var(--line); }
+.dept-head { position: sticky; top: 96px; align-self: start; }
+.dept-no { font-size: 0.9375rem; font-weight: 500; color: var(--red); }
+.dept-head h3 { margin: 10px 0 16px; font-size: clamp(1.6rem, 2.4vw, 2.25rem); }
+.dept-head p { max-width: 24rem; margin: 0; }
+.crew { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 36px 20px; list-style: none; margin: 0; padding: 0; }
+.crew-photo { aspect-ratio: 233 / 300; margin-bottom: 16px; border-radius: var(--r-sm); overflow: hidden; background: #fff; }
+.crew-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.2, .7, .2, 1); }
+.crew li:hover .crew-photo img { transform: scale(1.04); }
+.crew b { display: block; font-size: 1.0625rem; font-weight: 500; color: var(--head); }
+.crew span { display: block; margin-top: 2px; font-size: 0.9375rem; }
+@media (max-width: 1100px) { .crew { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 900px) {
+  .dept { grid-template-columns: 1fr; gap: 28px; padding-block: 40px; }
+  .dept-head { position: static; }
+}
+@media (max-width: 600px) { .crew { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 14px; } .crew b { font-size: 1rem; } }
 
 /* staggered image grid (careers) */
 .masonry { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: start; }
