@@ -282,8 +282,7 @@ def header(active, light):
       <ul class="hdr-links">{links}</ul>
     </div>
     <a class="hdr-logo" href="index.html" aria-label="Hyssna International, home">
-      <img class="logo-dark" src="assets/media/logo.png" alt="" width="232" height="34">
-      <img class="logo-light" src="assets/media/logo-white.png" alt="" width="232" height="34">
+      <img src="assets/media/logo-mark.svg" alt="" width="56" height="56">
     </a>
     <div class="hdr-right">{btn("contact.html", "Start your project", "dark", "hdr-cta")}</div>
   </div>
