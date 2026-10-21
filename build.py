@@ -58,7 +58,6 @@ NAV = [
     ("projects.html", "Projects", "enbd-1", []),
     ("about.html", "About", "adcb-1", []),
     ("team.html", "Our team", "adnoc-2", []),
-    ("careers.html", "Work with us", "nbad-3", []),
     ("contact.html", "Contact", "fab-1", []),
 ]
 
@@ -383,7 +382,6 @@ def footer():
         <li>&copy; <span data-year>2026</span> Hyssna International L.L.C.</li>
         <li><a href="about.html#certifications">Certifications</a></li>
         <li><a href="about.html#hse">Health and safety</a></li>
-        <li><a href="careers.html">Careers</a></li>
       </ul>
       <ul class="badges" aria-label="Certifications">
         <li><b>ISO 9001</b>2015</li><li><b>ISO 14001</b>2015</li><li><b>ISO 45001</b>2018</li><li><b>USGBC</b>Member</li>
@@ -920,67 +918,10 @@ def team():
     {"".join(groups)}
     </div>
   </div>
-</section>
-<section class="sec" aria-labelledby="join-title">
-  <div class="container inline-cta">
-    <div class="reveal"><h2 id="join-title">Want to join the team?</h2><p>We are always interested in hearing from talented people.</p></div>
-    {btn("careers.html", "Work with us", "light")}
-  </div>
 </section>'''
     return page("team.html", "Our team | Hyssna International",
                 f"Meet {gm_name}, General Manager, and the {count} people across design, planning, procurement, projects, HSE and joinery at Hyssna International.",
                 body, "team.html")
-
-
-def careers():
-    roles = [
-        ("pencil", "Design", "Interior designers, architects, MEP designers and visualisers."),
-        ("building", "Projects", "Project managers, site engineers and supervisors."),
-        ("factory", "Joinery factory", "Joiners, machinists, finishers and installers."),
-        ("calendar", "Planning and procurement", "Planning engineers, buyers and coordinators."),
-    ]
-    perks = [
-        ("users", "A multinational team", "Work alongside colleagues from many countries who share knowledge and ideas across every department."),
-        ("chart", "Room to grow", "Take on projects for the UAE's leading banks, energy companies and government entities."),
-        ("shield", "Safety first", "A certified health and safety management system, with toolbox talks and site inspections on every project."),
-    ]
-    body = f'''{intro("Work with us", "Our success is driven by our team's skill and passion. Join a multinational team that has shaped UAE interiors since 1980.", [("careers.html", "Work with us")])}
-<section class="sec tight" aria-labelledby="c-title">
-  <div class="container text-block">
-    <h2 id="c-title" class="reveal">A forward-thinking fit-out and joinery company with a committed team</h2>
-    <div class="reveal">
-      <p>We believe we do better as an organisation through strong, lasting partnerships with our people.</p>
-      <p>We are always interested in hearing from talented designers, engineers, project managers, planners, procurement specialists, joiners and site staff.</p>
-    </div>
-  </div>
-</section>
-<section class="sec tight">
-  <div class="container masonry">{media("adnoc-2", "ADNOC café by Hyssna")}{media("enbd-2", "Emirates NBD lounge by Hyssna")}{media("nbad-2", "NBAD executive office by Hyssna")}</div>
-</section>
-<section class="sec cream panel" aria-labelledby="perks-title">
-  <div class="container">
-    <div class="sec-title reveal"><h2 id="perks-title">Why build your career at Hyssna</h2></div>
-    {icon_list(perks, "three")}
-  </div>
-</section>
-<section class="sec" aria-labelledby="roles-title">
-  <div class="container">
-    <div class="sec-title reveal"><h2 id="roles-title">Teams we hire for</h2></div>
-    {icon_list(roles)}
-  </div>
-</section>
-<section class="sec tight" aria-labelledby="cv-title">
-  <div class="container text-media">
-    {media("adib-3", "ADIB branch by Hyssna")}
-    <div class="reveal">
-      <h2 id="cv-title">Send us your CV</h2>
-      <p>There are no open roles listed right now, but we welcome speculative applications. Email your CV and the type of role you are looking for to <a class="u-red" href="mailto:{EMAIL}">{EMAIL}</a>.</p>
-      {btn("mailto:" + EMAIL + "?subject=Career%20application", "Email your CV", "light")}
-    </div>
-  </div>
-</section>'''
-    return page("careers.html", "Work with us | Hyssna International",
-                "Careers at Hyssna International, an Abu Dhabi interior fit-out and joinery company.", body, "careers.html")
 
 
 def contact():
@@ -1062,7 +1003,7 @@ def build():
         ["nbad-2", "adcb-3", "fab-3", "adib-2", "nbad-1"], ["nbad", "adcb"]))
     out.append(projects_page())
     out += [project_page(i, p) for i, p in enumerate(PROJECTS)]
-    out += [about(), team(), careers(), contact()]
+    out += [about(), team(), contact()]
     return out
 
 
