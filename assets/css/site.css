@@ -20,14 +20,15 @@
      until then Instrument Sans, the closest free match, is loaded. */
   --sans: "Helvetica Now", "Instrument Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-  --inset: 40px;           /* gap between rounded panels and the window edge */
+  --inset: 0px;            /* panels run edge to edge */
+  --edge: 77px;            /* side gutter, matches .container */
   --r-sm: 10px;
   --r-lg: 20px;
   --pad-y: 120px;
 }
-@media (max-width: 1200px) { :root { --inset: 24px; --pad-y: 96px; } }
-@media (max-width: 900px)  { :root { --inset: 12px; --pad-y: 72px; } }
-@media (max-width: 600px)  { :root { --inset: 8px;  --pad-y: 56px; } }
+@media (max-width: 1200px) { :root { --edge: 50px; --pad-y: 96px; } }
+@media (max-width: 900px)  { :root { --edge: 30px; --pad-y: 72px; } }
+@media (max-width: 600px)  { :root { --edge: 20px; --pad-y: 56px; } }
 
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
@@ -115,15 +116,22 @@ a:hover .plus::before, a:hover .plus::after, button:hover .plus::before, button:
 .media { position: relative; overflow: hidden; border-radius: var(--r-sm); background: var(--soft); }
 .media img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.2, .7, .2, 1); }
 a:hover .media img, button:hover .media img { transform: scale(1.04); }
-img[src*="adnoc-"] { object-position: 50% 15%; }
+/* keep the client's logo in frame when a photo is cropped */
+img[src*="adib-1"], img[src*="adib-2"], img[src*="adib-3"],
+img[src*="adnoc-1"], img[src*="adnoc-2"], img[src*="adnoc-3"] { object-position: 100% 0%; }
+img[src*="nbad-2"] { object-position: 100% 100%; }
+img[src*="nbad-3"] { object-position: 0% 0%; }
+img[src*="enbd-2"], img[src*="eib-1"] { object-position: 0% 100%; }
+img[src*="adib-4"] { object-position: 12% 50%; }
+img[src*="adnoc-4"] { object-position: 75% 50%; }
 
 /* ------------------------------------------------------------- header */
 
 .site-header {
   position: absolute; top: 0; left: 50%; transform: translateX(-50%); z-index: 60;
-  width: calc(100% - 2 * var(--inset)); padding: 20px 0;
+  width: 100%; padding: 20px 0;
 }
-.hdr { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 20px; padding-inline: 30px; }
+.hdr { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 20px; padding-inline: max(var(--edge), (100% - 1620px) / 2); }
 .hdr-left { display: flex; align-items: center; gap: 36px; }
 .hdr-right { display: flex; justify-content: flex-end; }
 .hdr-logo img { height: 34px; width: auto; }
@@ -213,7 +221,7 @@ img[src*="adnoc-"] { object-position: 50% 15%; }
 /* ------------------------------------------------------------- hero (home) */
 
 .hero {
-  position: relative; margin-inline: var(--inset); border-radius: 0 0 var(--r-lg) var(--r-lg);
+  position: relative;
   min-height: max(640px, 100svh); display: grid; align-items: end; overflow: hidden; isolation: isolate;
   background: #141414; color: #fff;
 }
@@ -224,7 +232,7 @@ img[src*="adnoc-"] { object-position: 50% 15%; }
               linear-gradient(0deg, rgba(10,10,10,0.75) 0%, rgba(10,10,10,0) 45%),
               linear-gradient(180deg, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0) 22%);
 }
-.hero-inner { width: 100%; padding: 170px 70px clamp(36px, 5vw, 56px); display: grid; gap: 2.5rem; }
+.hero-inner { width: 100%; padding: 170px max(var(--edge), (100% - 1620px) / 2) clamp(36px, 5vw, 56px); display: grid; gap: 2.5rem; }
 .kicker { display: inline-flex; align-items: center; gap: 0.75rem; font-size: 0.9375rem; font-weight: 500; color: var(--red); }
 .kicker::before { content: ""; width: 28px; height: 2px; background: currentColor; }
 .hero .kicker { color: #fff; }
@@ -245,7 +253,7 @@ img[src*="adnoc-"] { object-position: 50% 15%; }
   .hero-copy > *:nth-child(4) { animation-delay: 360ms; }
 }
 @keyframes lift { from { opacity: 0; transform: translateY(24px); } }
-@media (max-width: 900px) { .hero-inner { padding: 130px 24px 32px; } }
+@media (max-width: 900px) { .hero-inner { padding-top: 130px; padding-bottom: 32px; } }
 
 /* ------------------------------------------------------------- sections and panels */
 
@@ -344,7 +352,7 @@ img[src*="adnoc-"] { object-position: 50% 15%; }
 
 /* project page banner */
 .p-banner { position: relative; min-height: min(760px, 88vh); display: grid; align-items: end; isolation: isolate; color: #fff; overflow: hidden; }
-.p-banner > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.p-banner > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; z-index: -2; }
 .p-banner::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, var(--dark) 0%, rgba(38,35,36,.6) 30%, rgba(38,35,36,.15) 60%, rgba(38,35,36,.6) 100%); }
 .p-banner .crumbs { position: absolute; top: 120px; color: var(--cream); }
 .p-banner .container { padding-bottom: 50px; }
@@ -464,12 +472,12 @@ img[src*="adnoc-"] { object-position: 50% 15%; }
 @media (max-width: 900px) { .certs { grid-template-columns: 1fr; gap: 40px; } .certs > :last-child { grid-column: 1; } }
 
 /* client logos */
-.logos { display: grid; grid-template-columns: repeat(7, 1fr); gap: 12px; list-style: none; margin: 0; padding: 0; }
+.logos { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 12px; list-style: none; margin: 0; padding: 0; }
 .logos li { background: #fff; border-radius: var(--r-sm); aspect-ratio: 3 / 2; display: grid; place-items: center; padding: 14px 18px; }
 .logos img { max-height: 54px; width: auto; max-width: 100%; object-fit: contain; filter: grayscale(1); opacity: .8; transition: filter .3s ease, opacity .3s ease; }
 .logos li:hover img { filter: none; opacity: 1; }
-@media (max-width: 1100px) { .logos { grid-template-columns: repeat(5, 1fr); } }
-@media (max-width: 700px) { .logos { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 1100px) { .logos { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+@media (max-width: 700px) { .logos { grid-template-columns: repeat(3, minmax(0, 1fr)); } .logos li { padding: 10px 12px; } }
 
 /* team */
 .people { display: grid; grid-template-columns: repeat(4, 1fr); gap: 50px 30px; list-style: none; margin: 0; padding: 0; }

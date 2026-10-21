@@ -50,14 +50,14 @@ ICONS = {
 NAV = [
     ("what-we-do.html", "What we do", "adib-3", [
         ("fit-out.html", "Interior fit-out", "adib-2"),
-        ("interior-design.html", "Interior design", "adnoc-3"),
+        ("interior-design.html", "Interior design", "adnoc-4"),
         ("joinery.html", "Joinery manufacturing", "nbad-2"),
     ]),
     ("projects.html", "Projects", "enbd-1", []),
-    ("about.html", "About", "home-2", []),
+    ("about.html", "About", "adcb-1", []),
     ("team.html", "Our team", "adnoc-2", []),
     ("careers.html", "Work with us", "nbad-3", []),
-    ("contact.html", "Contact", "contact-bg", []),
+    ("contact.html", "Contact", "fab-1", []),
 ]
 
 PROJECTS = [
@@ -67,10 +67,47 @@ PROJECTS = [
         "summary": "More than 25 branch fit-outs for ADIB, including Al Ain Al Qua'a, Sharjah Matajer and Baniyas.",
         "scope": ["Customer halls and teller counters", "Private banking suites", "ATM lobbies", "Bespoke joinery from our factory"],
         "location": "Across the UAE",
-        "images": ["adib-2", "adib-1", "adib-3"],
+        "banner": "adib-5",
+        "images": ["adib-2", "adib-4", "adib-1", "adib-5", "adib-3", "adib-6"],
         "body": [
             "Abu Dhabi Islamic Bank has trusted Hyssna with its branch network for years. Each branch follows the bank's design standards while adapting to a different building, footprint and community.",
             "Our factory produces the counters, wall panelling and feature joinery for every branch, so finishes stay consistent from Al Ain to Sharjah. Our planning team sequences each fit-out around the bank's opening dates.",
+        ],
+    },
+    {
+        "slug": "adcb", "client": "Abu Dhabi Commercial Bank", "short": "ADCB", "sector": "Banking",
+        "title": "ADCB Excellency priority banking and Al Majlis",
+        "summary": "A priority banking centre for ADCB Excellency, with relationship manager desks and a formal majlis.",
+        "scope": ["Excellency reception and relationship desks", "Al Majlis guest lounge", "Feature wall cladding and timber fins", "Feature ceilings and lighting"],
+        "location": "UAE",
+        "images": ["adcb-1", "adcb-2", "adcb-3", "adcb-4"],
+        "body": [
+            "ADCB Excellency looks after the bank's priority clients, so every surface had to feel considered. Veined white wall cladding, vertical timber fins and slim linear lights give the centre a calm, premium character.",
+            "The Al Majlis lounge offers a traditional welcome in a contemporary setting, with generous seating, a lectern and a layered feature ceiling.",
+        ],
+    },
+    {
+        "slug": "adnoc-digital-factory", "client": "ADNOC Upstream Digital Factory", "short": "ADNOC", "sector": "Energy",
+        "title": "A control room for the Upstream Digital Factory",
+        "summary": "An operations floor for ADNOC's Upstream Digital Factory, wrapped around a curved media wall.",
+        "scope": ["Curved operator consoles", "Full-height media wall", "Feature ceilings and lighting", "Glazed meeting rooms"],
+        "location": "Abu Dhabi",
+        "images": ["adnoc-4", "adnoc-5", "adnoc-6"],
+        "body": [
+            "ADNOC's Upstream Digital Factory brings engineers and live data together in one room. Sweeping white consoles follow the curve of a full-height media wall, with lighting set into the ceiling and the console bases to match.",
+            "Glass partitions keep the floor open while giving teams quiet places to meet.",
+        ],
+    },
+    {
+        "slug": "fab", "client": "First Abu Dhabi Bank", "short": "FAB", "sector": "Banking",
+        "title": "A new-format branch built around the customer",
+        "summary": "A contemporary FAB branch with a central lounge, glazed meeting pods and curved timber joinery.",
+        "scope": ["Central customer lounge", "Glazed meeting pods", "Curved wall panelling and joinery", "Media walls and cove lighting"],
+        "location": "UAE",
+        "images": ["fab-1", "fab-3", "fab-2"],
+        "body": [
+            "FAB's new-format branch replaces rows of counters with a relaxed central lounge. Curved walls, warm timber and soft cove lighting lead customers from the entrance to the glazed meeting pods.",
+            "Illuminated niches, built-in cabinets and numbered pods keep the space easy to find your way around, while the media wall carries the bank's brand.",
         ],
     },
     {
@@ -379,8 +416,8 @@ def certs_block(panel_cls="", heading="Independently certified for quality, safe
 def service_cards():
     rows = [
         ("fit-out.html", "Interior fit-out", "adib-3", "Complete turnkey fit-out for offices, bank branches, retail and hospitality, with the associated MEP works."),
-        ("interior-design.html", "Interior design", "adnoc-3", "Commercial, residential and institutional design, from 2D layouts and 3D visuals to furniture and exhibition design."),
-        ("joinery.html", "Joinery manufacturing", "nbad-2", "Custom joinery and furniture made in our own factory in Musaffah, finished to the drawings and installed by our teams."),
+        ("interior-design.html", "Interior design", "adnoc-4", "Commercial, residential and institutional design, from 2D layouts and 3D visuals to furniture and exhibition design."),
+        ("joinery.html", "Joinery manufacturing", "adcb-1", "Custom joinery and furniture made in our own factory in Musaffah, finished to the drawings and installed by our teams."),
     ]
     cards = "".join(
         f'<a class="card reveal" href="{h}">{media(im, "", plus=True)}<h3><span>{t}</span></h3><p>{d}</p></a>'
@@ -507,9 +544,9 @@ def home():
 def what_we_do():
     signs = [
         ("fit-out.html", "Interior fit-out", "adib-3", "Complete turnkey fit-out for offices, bank branches, retail and hospitality."),
-        ("interior-design.html", "Interior design", "adnoc-3", "Commercial, residential and institutional design, from 2D layouts to 3D animation."),
-        ("joinery.html", "Joinery manufacturing", "nbad-2", "Bespoke counters, panelling and furniture made in our Musaffah factory."),
-        ("projects.html", "Our projects", "enbd-1", "Branches, workplaces and lounges for the UAE's leading organisations."),
+        ("interior-design.html", "Interior design", "adnoc-4", "Commercial, residential and institutional design, from 2D layouts to 3D animation."),
+        ("joinery.html", "Joinery manufacturing", "adcb-1", "Bespoke counters, panelling and furniture made in our Musaffah factory."),
+        ("projects.html", "Our projects", "fab-1", "Branches, workplaces and lounges for the UAE's leading organisations."),
     ]
     cards = "".join(
         f'<a class="sign" href="{h}">{img(im, "")}<div class="sign-copy"><h2>{t}</h2><p>{d}</p></div><span class="plus" aria-hidden="true"></span></a>'
@@ -639,7 +676,7 @@ def projects_page():
 </section>
 {clients_block("cream panel", "Clients we have worked with")}'''
     return page("projects.html", "Projects | Hyssna International",
-                "Interior fit-out projects by Hyssna International for ADIB, ADNOC, Emirates NBD, Emirates Islamic and NBAD.", body, "projects.html")
+                "Interior fit-out projects by Hyssna International for ADIB, ADCB, ADNOC, FAB, Emirates NBD, Emirates Islamic and NBAD.", body, "projects.html")
 
 
 def project_page(i, p):
@@ -656,7 +693,7 @@ def project_page(i, p):
         f'<button type="button" data-lightbox="assets/media/projects/{g}.jpg" data-title="{escape(p["client"])}">{media(g, p["client"] + " by Hyssna")}</button>'
         for g in imgs)
     body = f'''<section class="p-banner" aria-labelledby="p-title">
-  {img(imgs[0], p["client"] + " interior by Hyssna", lazy=False)}
+  {img(p.get("banner", imgs[0]), p["client"] + " interior by Hyssna", lazy=False)}
   <div class="container">
     {crumbs([("projects.html", "Projects"), ("project-" + p["slug"] + ".html", p["client"])], light=True)}
     <h1 id="p-title">{p["client"]}</h1>
@@ -729,7 +766,7 @@ def about():
 <div class="sec">{feature("adib-3", "Precision joinery made in our own factory", "", "joinery.html", "Take a look", "ADIB ATM lobby by Hyssna")}</div>
 <section class="sec tight" aria-labelledby="people-title">
   <div class="container text-media">
-    {media("home-2", "Executive lounge by Hyssna")}
+    {media("adcb-2", "Al Majlis lounge by Hyssna for ADCB Excellency")}
     <div class="reveal">
       <h2 id="people-title">Our success is driven by our team's skill and passion</h2>
       <p>People who can deliver work to the standards our clients demand are hard to find. When they share our passion, sense of purpose and pride in precise craftsmanship, we look after them.</p>
@@ -899,10 +936,10 @@ def build():
          ("Hospitality and lounges", "Cafés, lounges and guest spaces."),
          ("Associated MEP works", "Mechanical, electrical and plumbing, designed and installed."),
          ("Finishes", "Floors, wall finishes, wallpaper and decorative details.")],
-        ["adib-1", "eib-1", "enbd-1", "nbad-1", "adib-3"], ["adib", "emirates-islamic"]))
+        ["adib-4", "fab-1", "adcb-1", "eib-1", "enbd-1"], ["adib", "fab"]))
     out.append(service_page(
         "interior-design.html", "Interior design",
-        "Commercial, residential and institutional interior design by a collaborative in-house team.", "adnoc-3",
+        "Commercial, residential and institutional interior design by a collaborative in-house team.", "adnoc-4",
         "Design that is built to be delivered",
         ["Our designers bring more than 35 years of collective experience to every brief. The team is infused with a collaborative spirit that produces competitive solutions for our clients, proving that the sum of the whole is greater than its parts.",
          "We have completed commercial, residential and institutional projects, exhibition and furniture design, and landscaping, delivering striking results for owners and stakeholders alike.",
@@ -916,7 +953,7 @@ def build():
          ("Material selection", "Finishes and samples chosen with you."),
          ("Exhibition design", "Stands and displays that draw people in."),
          ("Landscape design", "Outdoor spaces that complete the picture.")],
-        ["adnoc-1", "adnoc-2", "enbd-2", "nbad-3", "home-2"], ["adnoc", "emirates-nbd"]))
+        ["adnoc-4", "adcb-2", "adnoc-2", "fab-2", "enbd-2"], ["adnoc-digital-factory", "adcb"]))
     out.append(service_page(
         "joinery.html", "Joinery manufacturing",
         "Custom joinery and furniture made in our own factory in Musaffah, Abu Dhabi.", "nbad-2",
@@ -933,7 +970,7 @@ def build():
          ("Doors and windows", "Kitchen doors, windows and frames."),
          ("Handrails and blinds", "Handrails and decorative blinds."),
          ("Furniture", "Executive desks, LCD stands, skirting and loose furniture.")],
-        ["nbad-2", "adib-1", "adib-2", "nbad-3", "nbad-1"], ["nbad", "adib"]))
+        ["nbad-2", "adcb-3", "fab-3", "adib-2", "nbad-1"], ["nbad", "adcb"]))
     out.append(projects_page())
     out += [project_page(i, p) for i, p in enumerate(PROJECTS)]
     out += [about(), team(), careers(), contact()]
