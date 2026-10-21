@@ -19,7 +19,6 @@ ADDRESS = "New Sadaf Fashion Building, Mezzanine Floor, Office 06<br>Electra Roa
 MAPS = "https://maps.google.com/?q=Electra+Road+Abu+Dhabi"
 FILM_ID = "iToQFLRS8SY"   # company film on YouTube
 FILM_START = 11           # seconds, from the link the client shared
-FILM_FILE = "assets/media/film.mp4"   # used instead of YouTube when this file exists
 
 _ARROW_SVG = '<svg viewBox="0 0 15 11" aria-hidden="true"><path d="M0 5.5h13M8.5 1l4.5 4.5L8.5 10"/></svg>'
 ARROW = f'<span class="arr">{_ARROW_SVG}{_ARROW_SVG}</span>'
@@ -467,25 +466,22 @@ def process_block(panel_cls="cream panel", title="How we deliver, from first vis
 
 
 def film_block():
-    """Company film. Plays muted inside the page while it is on screen (site.js). A local
-    MP4 is used when there is one, otherwise the YouTube player, which site.js sends back
-    to its start just before the end so YouTube's end screen of other videos never shows."""
-    if (ROOT / FILM_FILE).exists():
-        attrs = 'data-film data-start="0"'
-        player = (f'<video class="film-video" autoplay muted loop playsinline preload="auto" '
-                  f'poster="assets/media/projects/adib-5.jpg"><source src="{FILM_FILE}" type="video/mp4"></video>')
-    else:
-        attrs = f'data-film="{FILM_ID}" data-start="{FILM_START}"'
-        player = '<div class="film-frame"><div id="film-player"></div></div>'
+    """Company film from YouTube. site.js plays it muted when it scrolls into view and
+    loops it before the end, so YouTube's end screen of other videos never appears."""
+    watch = f"https://www.youtube.com/watch?v={FILM_ID}&amp;t={FILM_START}s"
     return f'''<section class="sec tight" aria-labelledby="film-title">
   <div class="container">
     <div class="film-head reveal">
       <h2 id="film-title">See our work in motion</h2>
       <p>A closer look at Hyssna International and the interiors we create for clients across the UAE.</p>
     </div>
-    <div class="film reveal" {attrs}>
-      {player}
+    <div class="film reveal" data-film="{FILM_ID}" data-start="{FILM_START}">
+      <div class="film-frame"><div id="film-player"></div></div>
       {img("adib-5", "", folder="projects", cls="film-poster")}
+      <a class="film-big" href="{watch}" target="_blank" rel="noopener" data-film-big>
+        <span class="film-big-icon" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3 1.5l7.5 4.5L3 10.5z"/></svg></span>
+        <span data-film-big-label>Watch on YouTube</span>
+      </a>
       <div class="film-controls">
         <button class="video-toggle" type="button" data-film-play aria-pressed="false">
           <svg viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="1" width="3" height="10"/><rect x="7" y="1" width="3" height="10"/></svg>
