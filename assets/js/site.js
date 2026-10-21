@@ -84,6 +84,111 @@
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) setPaused(true);
   }
 
+  // Company film (home): a YouTube video that plays muted while it is on screen. It is
+  // sent back to its start just before the end, so YouTube's end screen of other
+  // videos never appears. If YouTube cannot load, the button links to the video.
+  var film = document.querySelector('[data-film]');
+  if (film) {
+    var filmId = film.getAttribute('data-film');
+    var filmStart = Number(film.getAttribute('data-start')) || 0;
+    var big = film.querySelector('[data-film-big]');
+    var bigLabel = film.querySelector('[data-film-big-label]');
+    var playBtn = film.querySelector('[data-film-play]');
+    var soundBtn = film.querySelector('[data-film-sound]');
+    var filmPauseIcon = playBtn.querySelector('svg').innerHTML;
+    var player = null, ready = false, inView = false, requested = false, guard = null;
+    var userPaused = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var showPlaying = function (playing) {
+      film.classList.toggle('is-playing', playing);
+      playBtn.setAttribute('aria-pressed', String(!playing));
+      playBtn.querySelector('span').textContent = playing ? 'Pause' : 'Play';
+      playBtn.querySelector('svg').innerHTML = playing ? filmPauseIcon : '<path d="M2 1l9 5-9 5z"/>';
+    };
+    var fail = function () {
+      if (ready) return;
+      film.classList.add('is-fallback');
+      bigLabel.textContent = 'Watch on YouTube';
+    };
+    var guardEnd = function () {
+      clearInterval(guard);
+      guard = setInterval(function () {
+        var d = player.getDuration(), t = player.getCurrentTime();
+        if (d && t > d - 1.2) player.seekTo(filmStart, true);
+      }, 250);
+    };
+    var build = function () {
+      player = new YT.Player('film-player', {
+        videoId: filmId,
+        playerVars: { autoplay: 0, mute: 1, controls: 0, rel: 0, playsinline: 1, modestbranding: 1, disablekb: 1, fs: 0, iv_load_policy: 3, start: filmStart },
+        events: {
+          onReady: function () {
+            ready = true;
+            player.mute();
+            film.classList.remove('is-fallback');
+            film.classList.add('is-ready');
+            bigLabel.textContent = 'Play film';
+            if (inView && !userPaused) player.playVideo();
+          },
+          onStateChange: function (e) {
+            if (e.data === YT.PlayerState.PLAYING) { showPlaying(true); guardEnd(); }
+            else if (e.data === YT.PlayerState.PAUSED) { showPlaying(false); clearInterval(guard); }
+            else if (e.data === YT.PlayerState.ENDED) { player.seekTo(filmStart, true); player.playVideo(); }
+          },
+          onError: function () { ready = false; film.classList.remove('is-ready', 'is-playing'); fail(); }
+        }
+      });
+    };
+    var load = function () {
+      if (requested) return;
+      requested = true;
+      if (window.YT && window.YT.Player) { build(); return; }
+      var prev = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = function () { if (prev) prev(); build(); };
+      var s = document.createElement('script');
+      s.src = 'https://www.youtube.com/iframe_api';
+      s.onerror = fail;
+      document.head.appendChild(s);
+      setTimeout(fail, 10000);
+    };
+    var toggle = function () {
+      if (player.getPlayerState() === YT.PlayerState.PLAYING) { userPaused = true; player.pauseVideo(); }
+      else { userPaused = false; player.playVideo(); }
+    };
+
+    big.addEventListener('click', function (e) {
+      if (!ready) return;            // not loaded: the link opens the video on YouTube
+      e.preventDefault();
+      userPaused = false;
+      player.playVideo();
+    });
+    playBtn.addEventListener('click', function () { if (ready) toggle(); });
+    soundBtn.addEventListener('click', function () {
+      if (!ready) return;
+      var on = player.isMuted();
+      if (on) player.unMute(); else player.mute();
+      soundBtn.setAttribute('aria-pressed', String(on));
+      soundBtn.querySelector('span').textContent = on ? 'Sound off' : 'Sound on';
+    });
+    film.addEventListener('click', function (e) { if (ready && !e.target.closest('a, button')) toggle(); });
+
+    if ('IntersectionObserver' in window) {
+      // load the player a little before the section arrives, play only while it is on screen
+      new IntersectionObserver(function (entries, obs) {
+        if (entries[0].isIntersecting) { load(); obs.disconnect(); }
+      }, { rootMargin: '400px 0px' }).observe(film);
+      new IntersectionObserver(function (entries) {
+        inView = entries[0].intersectionRatio >= 0.35;
+        if (!ready) return;
+        if (inView && !userPaused) player.playVideo();
+        else if (!inView && player.getPlayerState() === YT.PlayerState.PLAYING) player.pauseVideo();
+      }, { threshold: [0, 0.35] }).observe(film);
+    } else {
+      inView = true;
+      load();
+    }
+  }
+
   // Lightbox
   var lb = document.getElementById('lightbox');
   var lbImg = document.getElementById('lb-img');

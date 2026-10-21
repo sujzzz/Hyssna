@@ -17,6 +17,8 @@ FAX = "+971 2 676 7526"
 EMAIL = "info@hyssnauae.com"
 ADDRESS = "New Sadaf Fashion Building, Mezzanine Floor, Office 06<br>Electra Road, P.O. Box 46641<br>Abu Dhabi, United Arab Emirates"
 MAPS = "https://maps.google.com/?q=Electra+Road+Abu+Dhabi"
+FILM_ID = "iToQFLRS8SY"   # company film on YouTube
+FILM_START = 11           # seconds, from the link the client shared
 
 _ARROW_SVG = '<svg viewBox="0 0 15 11" aria-hidden="true"><path d="M0 5.5h13M8.5 1l4.5 4.5L8.5 10"/></svg>'
 ARROW = f'<span class="arr">{_ARROW_SVG}{_ARROW_SVG}</span>'
@@ -463,6 +465,38 @@ def process_block(panel_cls="cream panel", title="How we deliver, from first vis
 </section>'''
 
 
+def film_block():
+    """Company film from YouTube. site.js plays it muted when it scrolls into view and
+    loops it before the end, so YouTube's end screen of other videos never appears."""
+    watch = f"https://www.youtube.com/watch?v={FILM_ID}&amp;t={FILM_START}s"
+    return f'''<section class="sec tight" aria-labelledby="film-title">
+  <div class="container">
+    <div class="film-head reveal">
+      <h2 id="film-title">See our work in motion</h2>
+      <p>A closer look at Hyssna International and the interiors we create for clients across the UAE.</p>
+    </div>
+    <div class="film reveal" data-film="{FILM_ID}" data-start="{FILM_START}">
+      <div class="film-frame"><div id="film-player"></div></div>
+      {img("adib-5", "", folder="projects", cls="film-poster")}
+      <a class="film-big" href="{watch}" target="_blank" rel="noopener" data-film-big>
+        <span class="film-big-icon" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3 1.5l7.5 4.5L3 10.5z"/></svg></span>
+        <span data-film-big-label>Watch on YouTube</span>
+      </a>
+      <div class="film-controls">
+        <button class="video-toggle" type="button" data-film-play aria-pressed="false">
+          <svg viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="1" width="3" height="10"/><rect x="7" y="1" width="3" height="10"/></svg>
+          <span>Pause</span>
+        </button>
+        <button class="video-toggle" type="button" data-film-sound aria-pressed="false">
+          <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1 4h2.5L7 1v10L3.5 8H1z"/></svg>
+          <span>Sound on</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>'''
+
+
 def feature(image, title, text, href, label, alt=""):
     t = f"<p>{text}</p>" if text else ""
     return f'''<section class="feature" aria-label="{escape(title)}">
@@ -508,6 +542,7 @@ def home():
     {service_cards()}
   </div>
 </section>
+{film_block()}
 <section class="sec dark panel" aria-labelledby="usp-title">
   <div class="container">
     <div class="usp-intro reveal">
