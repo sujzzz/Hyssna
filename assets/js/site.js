@@ -207,6 +207,46 @@
     });
   }
 
+  // Projects: browse all, one period (or the films) at a time
+  var tabs = document.querySelectorAll('[data-archive-tab]');
+  if (tabs.length) {
+    var panels = document.querySelectorAll('[data-archive-panel]');
+    var archive = document.getElementById('all-projects');
+    tabs.forEach(function (t) {
+      t.addEventListener('click', function () {
+        var key = t.getAttribute('data-archive-tab');
+        tabs.forEach(function (o) { o.setAttribute('aria-pressed', String(o === t)); });
+        panels.forEach(function (p) { p.hidden = p.getAttribute('data-archive-panel') !== key; });
+        if (archive.getBoundingClientRect().top < 0) archive.scrollIntoView({ block: 'start' });
+      });
+    });
+  }
+  // film cards use YouTube's thumbnail, or our own photo where YouTube is unreachable
+  document.querySelectorAll('img[data-fallback]').forEach(function (im) {
+    var swap = function () {
+      var f = im.getAttribute('data-fallback');
+      if (im.getAttribute('src') !== f) im.src = f;
+    };
+    im.addEventListener('error', swap);
+    if (im.complete && !im.naturalWidth) swap();
+  });
+  // on the live site a film plays in place; inside a preview frame the link opens YouTube
+  document.querySelectorAll('a[data-video]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      if (window.self !== window.top) return;
+      e.preventDefault();
+      var box = document.createElement('div');
+      box.className = 'vid-frame';
+      var f = document.createElement('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/' + a.getAttribute('data-video') + '?autoplay=1&rel=0&playsinline=1';
+      f.title = a.getAttribute('aria-label');
+      f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+      f.allowFullscreen = true;
+      box.appendChild(f);
+      a.replaceWith(box);
+    });
+  });
+
   // Lightbox
   var lb = document.getElementById('lightbox');
   var lbImg = document.getElementById('lb-img');

@@ -728,6 +728,54 @@ def service_page(filename, title, intro_text, image, heading, paragraphs, items_
     return page(filename, f"{title} | Hyssna International", intro_text, body, "what-we-do.html", dark=False, light_header=False)
 
 
+ARCHIVE_TABS = [("y2425", "2024\u201325"), ("y2023", "2020\u201323"), ("earlier", "Earlier")]
+# project films on the company's YouTube channel, as listed on the current site
+VIDEOS = [
+    ("cGDsjPyktl8", "Al Hilal Bank \u2013 ACICO Tower, Dubai", "earlier-13"),
+    ("M_3B_KtLIRo", "Arabian Night \u2013 Abu Dhabi", "earlier-10"),
+    ("CAZhCqS4aeY", "Al Hilal Bank \u2013 Mushrif Mall", "earlier-13"),
+]
+CLIENT_PREFIX = [("adib", "Abu Dhabi Islamic Bank"), ("adcb", "Abu Dhabi Commercial Bank"), ("fab", "First Abu Dhabi Bank"),
+                 ("adnoc", "ADNOC"), ("nbad", "National Bank of Abu Dhabi"), ("eib", "Emirates Islamic"),
+                 ("enbd", "Emirates NBD"), ("al-masraf", "Al Masraf"), ("ahb", "Al Hilal Bank"), ("twofourfiftyfour", "twofour54"),
+                 ("dsc0864", "ADNOC"), ("dsc0865", "ADNOC")]
+
+
+def browse_all():
+    """Every project photo from the current site's Our Work page, by period, plus the project films."""
+    import json
+    photos = json.loads((ROOT / "assets/media/archive.json").read_text())
+    names = dict(ARCHIVE_TABS)
+    keys = {"2024-25": "y2425", "2020-23": "y2023", "Earlier": "earlier"}
+    by_tab = {k: [] for k, _ in ARCHIVE_TABS}
+    for tab, name, stem in photos:
+        k = keys[tab]
+        client = next((c for pre, c in CLIENT_PREFIX if stem.lower().startswith(pre)), "")
+        title = f"{client}, {names[k]}" if client else f"Hyssna project, {names[k]}"
+        by_tab[k].append(
+            f'<button type="button" data-lightbox="assets/media/archive/{name}.jpg" data-title="{title}">'
+            f'<div class="media"><img src="assets/media/archive/{name}.jpg" alt="{title}" loading="lazy"></div></button>')
+    total = sum(len(v) for v in by_tab.values())
+    tabs = "".join(
+        f'<button type="button" data-archive-tab="{k}" aria-pressed="{str(i == 0).lower()}">{label} <span>{len(by_tab[k])}</span></button>'
+        for i, (k, label) in enumerate(ARCHIVE_TABS))
+    tabs += f'<button type="button" data-archive-tab="videos" aria-pressed="false">Videos <span>{len(VIDEOS)}</span></button>'
+    panels = "".join(
+        f'<div class="archive-grid" data-archive-panel="{k}"{"" if i == 0 else " hidden"}>{"".join(by_tab[k])}</div>'
+        for i, (k, _) in enumerate(ARCHIVE_TABS))
+    vids = "".join(
+        f'''<div class="vid"><a class="vid-frame" href="https://www.youtube.com/watch?v={vid}" target="_blank" rel="noopener" data-video="{vid}" aria-label="Play {t}"><img src="https://i.ytimg.com/vi/{vid}/hqdefault.jpg" data-fallback="assets/media/archive/{poster}.jpg" alt="" loading="lazy"><span class="vid-play" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3 1.5l7.5 4.5L3 10.5z"/></svg></span></a><h3>{t}</h3></div>'''
+        for vid, t, poster in VIDEOS)
+    panels += f'<div class="vid-grid" data-archive-panel="videos" hidden>{vids}</div>'
+    return f'''<section class="sec" aria-labelledby="all-title">
+  <div class="container">
+    <div class="sec-title reveal"><h2 id="all-title">Browse all projects</h2><p>{total} photographs of our work across the UAE, from our latest branches back to our earlier projects, and films of our work.</p></div>
+    <div class="team-filter" role="group" aria-label="Show projects from">{tabs}</div>
+    <div class="archive" id="all-projects">{panels}</div>
+  </div>
+</section>'''
+
+
 def projects_page():
     cards = "".join(
         f'''<a class="sign" href="project-{p["slug"]}.html">{img(p["images"][0], p["client"] + " interior by Hyssna")}<div class="sign-copy"><span class="kick">{p["sector"]} | {p["location"]}</span><h2>{p["client"]}</h2><p>{p["summary"]}</p></div><span class="plus" aria-hidden="true"></span></a>'''
@@ -736,6 +784,7 @@ def projects_page():
 <section class="sec tight">
   <div class="container"><div class="signposts has-offset">{cards}</div></div>
 </section>
+{browse_all()}
 <section class="sec" aria-labelledby="cap-title">
   <div class="container text-block">
     <h2 id="cap-title" class="reveal">Our capability and experience offer a local focus with a proven track record</h2>
