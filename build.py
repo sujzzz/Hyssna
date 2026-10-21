@@ -16,7 +16,7 @@ PHONE_HREF = "tel:+97126767525"
 FAX = "+971 2 676 7526"
 EMAIL = "info@hyssnauae.com"
 ADDRESS = "New Sadaf Fashion Building, Mezzanine Floor, Office 06<br>Electra Road, P.O. Box 46641<br>Abu Dhabi, United Arab Emirates"
-MAPS = "https://maps.google.com/?q=Electra+Road+Abu+Dhabi"
+MAPS = "https://maps.app.goo.gl/vsJa6yL4E75g4B186"   # head office pin from the client
 FILM_ID = "iToQFLRS8SY"   # company film on YouTube
 FILM_START = 11           # seconds, from the link the client shared
 
@@ -301,8 +301,8 @@ def contact_grid():
     return f'''<div class="c-grid">
   <div><h3>Give us a call</h3><p><a class="u-red" href="{PHONE_HREF}">{PHONE}</a></p></div>
   <div><h3>Send us an email</h3><p><a class="u-red" href="mailto:{EMAIL}">{EMAIL}</a></p></div>
-  <div><h3>Find us</h3><address>{ADDRESS}</address></div>
-  <div><h3>Our joinery factory</h3><p>Musaffah, Abu Dhabi</p><p style="margin-top:14px"><a class="u-red" href="{MAPS}" target="_blank" rel="noopener">Get directions</a></p></div>
+  <div><h3>Find us</h3><address>{ADDRESS}</address><p style="margin-top:14px"><a class="u-red" href="{MAPS}" target="_blank" rel="noopener">Get directions</a></p></div>
+  <div><h3>Our joinery factory</h3><p>Musaffah, Abu Dhabi</p></div>
 </div>'''
 
 
